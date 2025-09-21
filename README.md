@@ -51,9 +51,4 @@ Before running this project, make sure you have the following installed:
 - Google Cloud account (for AI services)
 - MongoDB Atlas account (or local MongoDB installation)
 
-## 🔧 Installation
 
-1. Clone the repository:
-```bash
-git clone https://github.com/your-username/careerpath-ai.git
-cd careerpath-ai
