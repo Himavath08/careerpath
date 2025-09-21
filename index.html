@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerPath AI - Personalized Career Advisor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4285F4;
+            --secondary: #34A853;
+            --accent: #EA4335;
+            --light: #F5F5F5;
+            --dark: #333333;
+            --gray: #9AA0A6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+        
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+        
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 800 400"><rect fill="%23ffffff" width="800" height="400"/><path fill="%23f0f7ff" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,261.3C672,256,768,224,864,224C960,224,1056,256,1152,245.3C1248,235,1344,181,1392,154.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: var(--dark);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #3367D6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+        }
+        
+        .btn-secondary:hover {
+            background: #2C9348;
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+        }
+        
+        .btn-accent:hover {
+            background: #D33426;
+        }
+        
+        .section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .assessment-container {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .question {
+            margin-bottom: 2rem;
+        }
+        
+        .question h3 {
+            margin-bottom: 1rem;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .option {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option:hover {
+            border-color: var(--primary);
+            background-color: #f0f7ff;
+        }
+        
+        .option.selected {
+            border-color: var(--primary);
+            background-color: #e3f2fd;
+        }
+        
+        .results {
+            display: none;
+            margin-top: 2rem;
+        }
+        
+        .career-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .career-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 5px;
+        }
+        
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .skill {
+            background-color: #e3f2fd;
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .exam-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 3rem 0;
+        }
+        
+        .exam-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .exam-tab {
+            padding: 1rem 2rem;
+            background: white;
+            border: none;
+            border-radius: 5px 5px 0 0;
+            margin: 0 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .exam-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .exam-content {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .exam-info {
+            display: none;
+        }
+        
+        .exam-info.active {
+            display: block;
+        }
+        
+        .college-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .college-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .college-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .challenge-section {
+            background-color: #f8f9fa;
+            padding: 3rem 0;
+        }
+        
+        .challenge-container {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .usp-section {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+        }
+        
+        .usp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .usp-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .usp-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .exam-tabs {
+                flex-direction: column;
+            }
+            
+            .exam-tab {
+                border-radius: 0;
+                margin: 0.2rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <span class="logo-icon">🧠</span>
+                    CareerPath AI
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#challenge">Challenge</a></li>
+                    <li><a href="#solution">Solution</a></li>
+                    <li><a href="#usp">USP</a></li>
+                    <li><a href="#assessment">Demo</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>AI-Powered Career Guidance for Indian Students</h1>
+            <p>CareerPath AI uses Google Cloud's generative AI to provide personalized career recommendations based on your unique skills, interests, and the evolving job market.</p>
+            <a href="#assessment" class="btn">Try Demo Assessment</a>
+        </div>
+    </section>
+
+    <section id="challenge" class="section challenge-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>The Challenge We're Addressing</h2>
+                <p>Indian students face unique challenges in career planning</p>
+            </div>
+            <div class="challenge-container">
+                <h3>Students in India often face a bewildering array of career choices, compounded by generic guidance that fails to account for their unique interests, aptitudes, and the rapidly evolving job market.</h3>
+                <p>The traditional approach to career counseling struggles to keep pace with the emergence of new job roles and the specific skills required to succeed in them. This leaves many students feeling lost and unprepared, creating a critical need for a more dynamic, personalized, and insightful advisory tool.</p>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="#solution" class="btn">Our Solution</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="solution" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our AI-Powered Solution</h2>
+                <p>CareerPath AI provides personalized career guidance using advanced technology</p>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI-Powered Assessment</h3>
+                    <p>Our system uses Google Cloud's generative AI to analyze your skills, interests, and personality traits to recommend the most suitable career paths.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Real-Time Market Analysis</h3>
+                    <p>We continuously monitor the job market to provide up-to-date information on emerging careers, required skills, and salary expectations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Personalized Learning Paths</h3>
+                    <p>Get customized learning recommendations with specific courses, resources, and milestones to achieve your career goals.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="usp" class="usp-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Unique Selling Propositions</h2>
+                <p>What makes CareerPath AI different from traditional career guidance</p>
+            </div>
+            <div class="usp-grid">
+                <div class="usp-card">
+                    <div class="usp-icon">🚀</div>
+                    <h3>AI-Powered Personalization</h3>
+                    <p>Leverages Google Cloud's generative AI to provide hyper-personalized recommendations based on your unique profile.</p>
+                </div>
+                <div class="usp-card">
+                    <div class="usp-icon">📈</div>
+                    <h3>Real-Time Market Insights</h3>
+                    <p>Continuously updated with the latest job market trends and emerging career opportunities in India.</p>
+                </div>
+                <div class="usp-card">
+                    <div class="usp-icon">🎓</div>
+                    <h3>Education Pathway Mapping</h3>
+                    <p>Provides detailed roadmaps for Indian education paths, including top colleges, entrance exams, and preparation strategies.</p>
+                </div>
+                <div class="usp-card">
+                    <div class="usp-icon">🔍</div>
+                    <h3>Skills Gap Analysis</h3>
+                    <p>Identifies your current skills and maps them to career requirements, highlighting areas for development.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="assessment" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Experience CareerPath AI</h2>
+                <p>Try our demo assessment to see how our AI-powered career guidance works</p>
+            </div>
+            <div class="assessment-container">
+                <div id="assessment-questions">
+                    <div class="question" id="question-1">
+                        <h3>1. Which subjects interest you the most?</h3>
+                        <div class="options">
+                            <div class="option" onclick="selectOption(1, 1)">Mathematics & Logic</div>
+                            <div class="option" onclick="selectOption(1, 2)">Science & Technology</div>
+                            <div class="option" onclick="selectOption(1, 3)">Arts & Creativity</div>
+                            <div class="option" onclick="selectOption(1, 4)">Business & Commerce</div>
+                        </div>
+                    </div>
+                    <div class="question" id="question-2" style="display: none;">
+                        <h3>2. What type of work environment do you prefer?</h3>
+                        <div class="options">
+                            <div class="option" onclick="selectOption(2, 1)">Structured and organized</div>
+                            <div class="option" onclick="selectOption(2, 2)">Innovative and fast-paced</div>
+                            <div class="option" onclick="selectOption(2, 3)">Creative and flexible</div>
+                            <div class="option" onclick="selectOption(2, 4)">Entrepreneurial and independent</div>
+                        </div>
+                    </div>
+                    <div class="question" id="question-3" style="display: none;">
+                        <h3>3. Which skills do you excel at?</h3>
+                        <div class="options">
+                            <div class="option" onclick="selectOption(3, 1)">Analytical thinking</div>
+                            <div class="option" onclick="selectOption(3, 2)">Problem-solving</div>
+                            <div class="option" onclick="selectOption(3, 3)">Communication</div>
+                            <div class="option" onclick="selectOption(3, 4)">Leadership</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="btn" id="prev-btn" style="display: none;" onclick="prevQuestion()">Previous</button>
+                    <button class="btn" id="next-btn" style="display: none;" onclick="nextQuestion()">Next</button>
+                    <button class="btn" id="submit-btn" style="display: none;" onclick="showResults()">Get AI Recommendations</button>
+                </div>
+                <div id="results" class="results">
+                    <h2>Your AI-Generated Career Matches</h2>
+                    <p>Based on your assessment, here are the career paths that align with your profile:</p>
+                    
+                    <div class="career-card">
+                        <h3>Data Scientist</h3>
+                        <p>Match: 92%</p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 92%"></div>
+                        </div>
+                        <p>Data scientists use analytical and statistical methods to extract insights from data. This field is growing rapidly in India with high demand across industries.</p>
+                        <h4>Key Skills Needed:</h4>
+                        <div class="skills-list">
+                            <span class="skill">Python</span>
+                            <span class="skill">Statistics</span>
+                            <span class="skill">Machine Learning</span>
+                            <span class="skill">Data Visualization</span>
+                        </div>
+                    </div>
+                    
+                    <div class="career-card">
+                        <h3>AI Engineer</h3>
+                        <p>Match: 85%</p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 85%"></div>
+                        </div>
+                        <p>AI engineers develop artificial intelligence models and implement AI solutions to solve complex problems. This is one of the fastest-growing tech careers in India.</p>
+                        <h4>Key Skills Needed:</h4>
+                        <div class="skills-list">
+                            <span class="skill">Python</span>
+                            <span class="skill">TensorFlow</span>
+                            <span class="skill">Neural Networks</span>
+                            <span class="skill">Natural Language Processing</span>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn btn-secondary" onclick="resetAssessment()">Retake Assessment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Technical Implementation</h2>
+                <p>How we leverage Google Cloud's AI technology</p>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">☁</div>
+                    <h3>Google Cloud AI</h3>
+                    <p>We use Google Cloud's generative AI services to analyze student profiles and generate personalized career recommendations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Dynamic Skill Mapping</h3>
+                    <p>Our algorithm continuously maps skills to emerging job roles, ensuring recommendations stay relevant to the evolving job market.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Responsive Design</h3>
+                    <p>The platform works seamlessly across devices, making career guidance accessible to students everywhere in India.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>CareerPath AI - Personalized Career Guidance for Indian Students</p>
+            <p>© 2023 CareerPath AI. All rights reserved.</p>
+            <p>This project leverages Google Cloud's generative AI to provide personalized career guidance.</p>
+        </div>
+    </footer>
+
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 3;
+        const userResponses = {};
+        
+        function selectOption(questionId, optionId) {
+            // Remove selected class from all options in this question
+            const options = document.querySelectorAll(#question-${questionId} .option);
+            options.forEach(option => option.classList.remove('selected'));
+            
+            // Add selected class to clicked option
+            event.target.classList.add('selected');
+            
+            // Store user response
+            userResponses[questionId] = optionId;
+            
+            // Show next button
+            document.getElementById('next-btn').style.display = 'inline-block';
+            
+            // If on last question, show submit button instead of next
+            if (questionId === totalQuestions) {
+                document.getElementById('next-btn').style.display = 'none';
+                document.getElementById('submit-btn').style.display = 'inline-block';
+            }
+        }
+        
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                document.getElementById(question-${currentQuestion}).style.display = 'none';
+                currentQuestion++;
+                document.getElementById(question-${currentQuestion}).style.display = 'block';
+                
+                // Show previous button after first question
+                if (currentQuestion > 1) {
+                    document.getElementById('prev-btn').style.display = 'inline-block';
+                }
+                
+                // Hide next button until an option is selected
+                document.getElementById('next-btn').style.display = 'none';
+                
+                // If we've already answered this question, show the selection
+                if (userResponses[currentQuestion]) {
+                    const selectedOption = document.querySelector(#question-${currentQuestion} .option:nth-child(${userResponses[currentQuestion] + 1}));
+                    if (selectedOption) {
+                        selectedOption.classList.add('selected');
+                        document.getElementById('next-btn').style.display = 'inline-block';
+                        if (currentQuestion === totalQuestions) {
+                            document.getElementById('next-btn').style.display = 'none';
+                            document.getElementById('submit-btn').style.display = 'inline-block';
+                        }
+                    }
+                }
+            }
+        }
+        
+        function prevQuestion() {
+            if (currentQuestion > 1) {
+                document.getElementById(question-${currentQuestion}).style.display = 'none';
+                currentQuestion--;
+                document.getElementById(question-${currentQuestion}).style.display = 'block';
+                
+                // Hide previous button on first question
+                if (currentQuestion === 1) {
+                    document.getElementById('prev-btn').style.display = 'none';
+                }
+                
+                // Always show next button when going back (since we've already selected an option)
+                document.getElementById('next-btn').style.display = 'inline-block';
+                document.getElementById('submit-btn').style.display = 'none';
+            }
+        }
+        
+        function showResults() {
+            document.getElementById('assessment-questions').style.display = 'none';
+            document.getElementById('prev-btn').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function resetAssessment() {
+            currentQuestion = 1;
+            
+            // Reset all questions to initial state
+            for (let i = 1; i <= totalQuestions; i++) {
+                document.getElementById(question-${i}).style.display = i === 1 ? 'block' : 'none';
+                
+                // Clear selections
+                const options = document.querySelectorAll(#question-${i} .option);
+                options.forEach(option => option.classList.remove('selected'));
+            }
+            
+            // Reset buttons
+            document.getElementById('prev-btn').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('assessment-questions').style.display = 'block';
+            
+            // Clear responses
+            for (let key in userResponses) {
+                delete userResponses[key];
+            }
+            
+            // Scroll to assessment
+            document.getElementById('assessment').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Initialize assessment
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('question-1').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
